@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nongkeezhan.nkez.dao.TechnologyMapper" >
+  <resultMap id="BaseResultMap" type="com.nongkeezhan.nkez.pojo.Technology" >
+    <id column="techology_id" property="techologyId" jdbcType="VARCHAR" />
+    <id column="professor_id" property="professorId" jdbcType="VARCHAR" />
+    <result column="techology_title" property="techologyTitle" jdbcType="VARCHAR" />
+    <result column="techology_picture" property="techologyPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="TechnologyDTOMap" type="com.nongkeezhan.nkez.pojo.DTO.TechnologyDTO" >
+    <id column="techology_id" property="techologyId" jdbcType="VARCHAR" />
+    <id column="professor_id" property="professorId" jdbcType="VARCHAR" />
+    <result column="techology_title" property="techologyTitle" jdbcType="VARCHAR" />
+    <result column="techology_picture" property="techologyPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    techology_id, professor_id, techology_title, techology_picture
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nongkeezhan.nkez.pojo.TechnologyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from technology
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.nongkeezhan.nkez.pojo.TechnologyKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from technology
+    where techology_id = #{techologyId,jdbcType=VARCHAR}
+      and professor_id = #{professorId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.nongkeezhan.nkez.pojo.TechnologyKey" >
+    delete from technology
+    where techology_id = #{techologyId,jdbcType=VARCHAR}
+      and professor_id = #{professorId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nongkeezhan.nkez.pojo.TechnologyExample" >
+    delete from technology
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nongkeezhan.nkez.pojo.Technology" >
+    insert into technology (techology_id, professor_id, techology_title, 
+      techology_picture)
+    values (#{techologyId,jdbcType=VARCHAR}, #{professorId,jdbcType=VARCHAR}, #{techologyTitle,jdbcType=VARCHAR}, 
+      #{techologyPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nongkeezhan.nkez.pojo.Technology" >
+    insert into technology
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="techologyId != null" >
+        techology_id,
+      </if>
+      <if test="professorId != null" >
+        professor_id,
+      </if>
+      <if test="techologyTitle != null" >
+        techology_title,
+      </if>
+      <if test="techologyPicture != null" >
+        techology_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="techologyId != null" >
+        #{techologyId,jdbcType=VARCHAR},
+      </if>
+      <if test="professorId != null" >
+        #{professorId,jdbcType=VARCHAR},
+      </if>
+      <if test="techologyTitle != null" >
+        #{techologyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="techologyPicture != null" >
+        #{techologyPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nongkeezhan.nkez.pojo.TechnologyExample" resultType="java.lang.Integer" >
+    select count(*) from technology
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update technology
+    <set >
+      <if test="record.techologyId != null" >
+        techology_id = #{record.techologyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorId != null" >
+        professor_id = #{record.professorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.techologyTitle != null" >
+        techology_title = #{record.techologyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.techologyPicture != null" >
+        techology_picture = #{record.techologyPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update technology
+    set techology_id = #{record.techologyId,jdbcType=VARCHAR},
+      professor_id = #{record.professorId,jdbcType=VARCHAR},
+      techology_title = #{record.techologyTitle,jdbcType=VARCHAR},
+      techology_picture = #{record.techologyPicture,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nongkeezhan.nkez.pojo.Technology" >
+    update technology
+    <set >
+      <if test="techologyTitle != null" >
+        techology_title = #{techologyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="techologyPicture != null" >
+        techology_picture = #{techologyPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where techology_id = #{techologyId,jdbcType=VARCHAR}
+      and professor_id = #{professorId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nongkeezhan.nkez.pojo.Technology" >
+    update technology
+    set techology_title = #{techologyTitle,jdbcType=VARCHAR},
+      techology_picture = #{techologyPicture,jdbcType=VARCHAR}
+    where techology_id = #{techologyId,jdbcType=VARCHAR}
+      and professor_id = #{professorId,jdbcType=VARCHAR}
+  </update>
+  <select id="listAll" resultMap="TechnologyDTOMap">
+        select *
+        from technology
+    </select>
+  <select id="getTechnologyByParam" resultMap="TechnologyDTOMap">
+    SELECT *
+    FROM technology
+    <where>
+      <!--技术id查询-->
+      <if test="techologyId != null">
+        techology_id = #{techologyId}
+      </if>
+      <!--技术专家ID模糊查询-->
+      <if test="professorId != null">
+        AND professor_id LIKE CONCAT('%',#{professorId},'%')
+      </if>
+      <!--技术标题模糊查询-->
+      <if test="techologyTitle != null">
+        AND techology_title LIKE CONCAT('%',#{techologyTitle},'%')
+      </if>
+      <!--技术来源模糊查询-->
+    </where>
+
+  </select>
+</mapper>

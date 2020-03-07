@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nongkeezhan.nkez.dao.ProfessorMapper" >
+  <resultMap id="BaseResultMap" type="com.nongkeezhan.nkez.pojo.Professor" >
+    <id column="professor_id" property="professorId" jdbcType="VARCHAR" />
+    <result column="professor_name" property="professorName" jdbcType="VARCHAR" />
+    <result column="professor_position" property="professorPosition" jdbcType="VARCHAR" />
+    <result column="professor_yjfx" property="professorYjfx" jdbcType="VARCHAR" />
+    <result column="professor_zl" property="professorZl" jdbcType="VARCHAR" />
+    <result column="professor_picture" property="professorPicture" jdbcType="VARCHAR" />
+    <result column="professor_category" property="professorCategory" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ProfessorDTOMap" type="com.nongkeezhan.nkez.pojo.DTO.ProfessorDTO" >
+    <id column="professor_id" property="professorId" jdbcType="VARCHAR" />
+    <result column="professor_name" property="professorName" jdbcType="VARCHAR" />
+    <result column="professor_position" property="professorPosition" jdbcType="VARCHAR" />
+    <result column="professor_yjfx" property="professorYjfx" jdbcType="VARCHAR" />
+    <result column="professor_zl" property="professorZl" jdbcType="VARCHAR" />
+    <result column="professor_picture" property="professorPicture" jdbcType="VARCHAR" />
+    <result column="professor_category" property="professorCategory" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    professor_id, professor_name, professor_position, professor_yjfx, professor_zl, professor_picture, 
+    professor_category
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nongkeezhan.nkez.pojo.ProfessorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from professor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from professor
+    where professor_id = #{professorId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from professor
+    where professor_id = #{professorId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nongkeezhan.nkez.pojo.ProfessorExample" >
+    delete from professor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nongkeezhan.nkez.pojo.Professor" >
+    insert into professor (professor_id, professor_name, professor_position, 
+      professor_yjfx, professor_zl, professor_picture, 
+      professor_category)
+    values (#{professorId,jdbcType=VARCHAR}, #{professorName,jdbcType=VARCHAR}, #{professorPosition,jdbcType=VARCHAR}, 
+      #{professorYjfx,jdbcType=VARCHAR}, #{professorZl,jdbcType=VARCHAR}, #{professorPicture,jdbcType=VARCHAR}, 
+      #{professorCategory,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nongkeezhan.nkez.pojo.Professor" >
+    insert into professor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="professorId != null" >
+        professor_id,
+      </if>
+      <if test="professorName != null" >
+        professor_name,
+      </if>
+      <if test="professorPosition != null" >
+        professor_position,
+      </if>
+      <if test="professorYjfx != null" >
+        professor_yjfx,
+      </if>
+      <if test="professorZl != null" >
+        professor_zl,
+      </if>
+      <if test="professorPicture != null" >
+        professor_picture,
+      </if>
+      <if test="professorCategory != null" >
+        professor_category,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="professorId != null" >
+        #{professorId,jdbcType=VARCHAR},
+      </if>
+      <if test="professorName != null" >
+        #{professorName,jdbcType=VARCHAR},
+      </if>
+      <if test="professorPosition != null" >
+        #{professorPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="professorYjfx != null" >
+        #{professorYjfx,jdbcType=VARCHAR},
+      </if>
+      <if test="professorZl != null" >
+        #{professorZl,jdbcType=VARCHAR},
+      </if>
+      <if test="professorPicture != null" >
+        #{professorPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="professorCategory != null" >
+        #{professorCategory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nongkeezhan.nkez.pojo.ProfessorExample" resultType="java.lang.Integer" >
+    select count(*) from professor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update professor
+    <set >
+      <if test="record.professorId != null" >
+        professor_id = #{record.professorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorName != null" >
+        professor_name = #{record.professorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorPosition != null" >
+        professor_position = #{record.professorPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorYjfx != null" >
+        professor_yjfx = #{record.professorYjfx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorZl != null" >
+        professor_zl = #{record.professorZl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorPicture != null" >
+        professor_picture = #{record.professorPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professorCategory != null" >
+        professor_category = #{record.professorCategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update professor
+    set professor_id = #{record.professorId,jdbcType=VARCHAR},
+      professor_name = #{record.professorName,jdbcType=VARCHAR},
+      professor_position = #{record.professorPosition,jdbcType=VARCHAR},
+      professor_yjfx = #{record.professorYjfx,jdbcType=VARCHAR},
+      professor_zl = #{record.professorZl,jdbcType=VARCHAR},
+      professor_picture = #{record.professorPicture,jdbcType=VARCHAR},
+      professor_category = #{record.professorCategory,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nongkeezhan.nkez.pojo.Professor" >
+    update professor
+    <set >
+      <if test="professorName != null" >
+        professor_name = #{professorName,jdbcType=VARCHAR},
+      </if>
+      <if test="professorPosition != null" >
+        professor_position = #{professorPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="professorYjfx != null" >
+        professor_yjfx = #{professorYjfx,jdbcType=VARCHAR},
+      </if>
+      <if test="professorZl != null" >
+        professor_zl = #{professorZl,jdbcType=VARCHAR},
+      </if>
+      <if test="professorPicture != null" >
+        professor_picture = #{professorPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="professorCategory != null" >
+        professor_category = #{professorCategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where professor_id = #{professorId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nongkeezhan.nkez.pojo.Professor" >
+    update professor
+    set professor_name = #{professorName,jdbcType=VARCHAR},
+      professor_position = #{professorPosition,jdbcType=VARCHAR},
+      professor_yjfx = #{professorYjfx,jdbcType=VARCHAR},
+      professor_zl = #{professorZl,jdbcType=VARCHAR},
+      professor_picture = #{professorPicture,jdbcType=VARCHAR},
+      professor_category = #{professorCategory,jdbcType=VARCHAR}
+    where professor_id = #{professorId,jdbcType=VARCHAR}
+  </update>
+  <select id="listAll" resultMap="ProfessorDTOMap">
+        select *
+        from professor
+    </select>
+  <select id="listByCategory" resultMap="ProfessorDTOMap">
+        select *
+        from professor
+        where professor_category = #{professorCategory,jdbcType=VARCHAR}
+    </select>
+  <select id="getProfessorByParam" resultMap="ProfessorDTOMap">
+    SELECT *
+    FROM professor
+    <where>
+      <!--专家id查询-->
+      <if test="professorId != null">
+        professor_id = #{professorId}
+      </if>
+      <!--专家姓名模糊查询-->
+      <if test="professorName != null">
+        AND professor_name LIKE CONCAT('%',#{professorName},'%')
+      </if>
+      <!--专家职称模糊查询-->
+      <if test="professorPosition != null">
+        AND professor_position LIKE CONCAT('%',#{professorPosition},'%')
+      </if>
+      <!--专家研究方向模糊查询-->
+      <if test="professorYjfx != null">
+        AND professor_yjfx LIKE CONCAT('%',#{professorYjfx},'%')
+      </if>
+      <!--专家资料模糊查询-->
+      <if test="professorZl != null">
+        AND professor_zl LIKE CONCAT('%',#{professorZl},'%')
+      </if>
+      <!--专家类别模糊查询-->
+      <if test="professorCategory != null">
+        AND professor_category LIKE CONCAT('%',#{professorCategory},'%')
+      </if>
+    </where>
+
+  </select>
+</mapper>

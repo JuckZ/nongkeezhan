@@ -1,0 +1,1 @@
+.newsTop{position:relative;line-height:20px;max-height:40px;overflow:hidden;height:44px}.newsTop:after{content:"...";position:absolute;bottom:0;right:0;padding-left:40px;background:-webkit-gradient(linear,left top,right top,from(transparent),color-stop(55%,#fff));background:linear-gradient(90deg,transparent,#fff 55%)}.newsAllContent::-webkit-scrollbar{display:none}
